@@ -1,6 +1,7 @@
 package com.xjcy.util;
 
 import java.security.MessageDigest;
+import java.util.UUID;
 
 public class MD5
 {
@@ -28,5 +29,10 @@ public class MD5
 			ex.printStackTrace();
 		}
 		return null;
+	}
+
+	public static String getRandomStr()
+	{
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 }
