@@ -22,6 +22,18 @@ public class ObjectUtils
 		}
 	}
 
+	public static byte[] string2Byte(String str, String charset)
+	{
+		try
+		{
+			return str.getBytes(charset);
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			return null;
+		}
+	}
+
 	/**
 	 * 方法名：byteToHex</br>
 	 * 详述：字符串加密辅助方法 </br>

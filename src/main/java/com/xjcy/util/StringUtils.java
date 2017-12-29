@@ -8,4 +8,9 @@ public class StringUtils
 		return str == null || str.length() == 0;
 	}
 
+	public static boolean isNotBlank(String str)
+	{
+		return !isEmpty(str);
+	}
+
 }
