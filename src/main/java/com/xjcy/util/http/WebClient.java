@@ -19,6 +19,18 @@ public class WebClient
 	private static final Logger logger = Logger.getLogger(WebClient.class);
 
 	private static final String CHARSET_UTF8 = "utf-8";
+	public static final Map<String, String> DEFAULT_HEADERS = new HashMap<String, String>()
+	{
+		/**
+		* 
+		*/
+		private static final long serialVersionUID = 1L;
+
+		{
+			put("Content-Type", "application/json; charset=UTF-8");
+			put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0");
+		}
+	};
 
 	public static String downloadString(String url)
 	{
@@ -58,13 +70,13 @@ public class WebClient
 		{
 			Map<String, String> headers = new HashMap<>();
 			headers.put("Content-Type", "application/json; charset=UTF-8");
-			headers.put("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0");
+			headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0");
 			return uploadData(url, data, null, null);
 		}
 		return null;
 	}
 
-	private static String uploadData(String url, byte[] data, Map<String, String> headers, Cookie cookie)
+	public static String uploadData(String url, byte[] data, Map<String, String> headers, Cookie cookie)
 	{
 		try
 		{
@@ -96,8 +108,7 @@ public class WebClient
 			}
 			// 获取请求结果
 			String result = ObjectUtils.input2String(conn.getInputStream());
-			if(cookie != null)
-				cookie.getCookie(conn.getHeaderField("Set-Cookie"));
+			if (cookie != null) cookie.getCookie(conn.getHeaderField("Set-Cookie"));
 			return result;
 		}
 		catch (IOException e)
