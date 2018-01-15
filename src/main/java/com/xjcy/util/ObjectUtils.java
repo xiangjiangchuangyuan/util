@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Formatter;
+import java.util.zip.GZIPInputStream;
 
 public class ObjectUtils
 {
@@ -58,11 +59,18 @@ public class ObjectUtils
 
 	public static String input2String(InputStream input)
 	{
+		return input2String(input, false);
+	}
+
+	public static String input2String(InputStream input, boolean isGzip)
+	{
 		StringBuilder sb = new StringBuilder();
 		String line = null;
 		try
 		{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+			if (isGzip)
+				input = new GZIPInputStream(input);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(input, "utf-8"));
 			while ((line = reader.readLine()) != null)
 			{
 				sb.append(line);
