@@ -68,12 +68,7 @@ public class RedisUtils
 		try
 		{
 			j = getInstance();
-			String result = j.get(cacheKey);
-			if (logger.isDebugEnabled())
-			{
-				logger.debug("获取缓存：" + cacheKey + " 结果：" + result);
-			}
-			return result;
+			return j.get(cacheKey);
 		}
 		catch (Exception e)
 		{
@@ -92,16 +87,8 @@ public class RedisUtils
 		try
 		{
 			j = getInstance();
-			String result = j.set(cacheKey, cacheJSON);
-			if (logger.isDebugEnabled())
-			{
-				logger.debug("设置缓存：[key] => " + cacheKey + " 结果：" + result);
-			}
-			Long result2 = j.expire(cacheKey, seconds);
-			if (logger.isDebugEnabled())
-			{
-				logger.debug("设置缓存失效时间：[key] => " + cacheKey + " 结果：" + result2);
-			}
+			j.set(cacheKey, cacheJSON);
+			j.expire(cacheKey, seconds);
 			return true;
 		}
 		catch (Exception e)
@@ -127,10 +114,6 @@ public class RedisUtils
 			{
 				j.del(str);
 			}
-			if (logger.isDebugEnabled())
-			{
-				logger.debug("[CACHE] 清除缓存列表成功" + key);
-			}
 			return true;
 		}
 		catch (Exception e)
@@ -150,11 +133,7 @@ public class RedisUtils
 		try
 		{
 			j = getInstance();
-			Long result = j.del(key);
-			if (logger.isDebugEnabled())
-			{
-				logger.debug("========删除缓存：[key] => " + key + " 结果：" + result);
-			}
+			j.del(key);
 			return true;
 		}
 		catch (Exception e)
@@ -199,12 +178,7 @@ public class RedisUtils
 		try
 		{
 			j = getInstance();
-			boolean result = j.exists(key);
-			if (logger.isDebugEnabled())
-			{
-				logger.debug("检查缓存是否存在：[key] => " + key + " 结果：" + result);
-			}
-			return result;
+			return j.exists(key);
 		}
 		catch (Exception e)
 		{
