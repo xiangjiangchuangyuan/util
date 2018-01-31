@@ -70,6 +70,14 @@ public class DateEx
 			cal.add(Calendar.DATE, day);
 		return cal.get(Calendar.DATE);
 	}
+	
+	public static Date addDay(String date, int day)
+	{
+		cal.setTime(toDate(date));
+		if (day != 0)
+			cal.add(Calendar.DATE, day);
+		return cal.getTime();
+	}
 
 	public static String today()
 	{
@@ -85,9 +93,9 @@ public class DateEx
 	{
 		String format;
 		if (withTime)
-			format = StringUtils.isEmpty(join) ? "yyyy年MM月dd日 HH时mm分ss秒" : ("yyyy" + join + "MM" + join + "dd " + "HH:mm:ss");
+			format = (join == null) ? "yyyy年MM月dd日 HH时mm分ss秒" : ("yyyy" + join + "MM" + join + "dd " + "HH:mm:ss");
 		else
-			format = StringUtils.isEmpty(join) ? "yyyy年MM月dd日" : ("yyyy" + join + "MM" + join + "dd");
+			format = (join == null) ? "yyyy年MM月dd日" : ("yyyy" + join + "MM" + join + "dd");
 		return new SimpleDateFormat(format).format(new Date());
 	}
 
@@ -113,5 +121,12 @@ public class DateEx
 		cal.setTime(new Date());
 		cal.add(Calendar.YEAR, year);
 		return cal.get(Calendar.YEAR);
+	}
+	
+	public static Date addYear(String date, int year)
+	{
+		cal.setTime(toDate(date));
+		cal.add(Calendar.YEAR, year);
+		return cal.getTime();
 	}
 }
