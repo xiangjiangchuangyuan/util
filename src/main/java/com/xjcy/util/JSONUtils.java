@@ -41,4 +41,10 @@ public class JSONUtils
 		}
 		return Integer.parseInt(json.substring(start + 1, end));
 	}
+	
+	public static void main(String[] args)
+	{
+		String json = "{\"greet\":\"您好，非常高兴能够为您解答疑惑，希望我的回答对您有所帮助。\",\"qualitative\":\"您咨询的是　相关法律问题\",\"analysis\":\"您咨询的是　相关法律问题5\",\"suggest\":\"您咨询的是　相关法律问5\",\"laws\":\"您咨询的是　相关法律问题5\"}";
+		System.out.println(getString(json, "suggest"));
+	}
 }
