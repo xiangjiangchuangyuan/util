@@ -1,6 +1,7 @@
 package com.xjcy.util;
 
-import org.apache.catalina.util.URLEncoder;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import com.xjcy.util.http.WebClient;
 
@@ -38,6 +39,10 @@ public class UrlUtils
 
 	private static String encodeUrl(String url)
 	{
-		return URLEncoder.DEFAULT.encode(url, "utf-8");
+		try {
+			return URLEncoder.encode(url, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			return url;
+		}
 	}
 }
