@@ -4,50 +4,81 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.log4j.Logger;
 
-public class ZipUtils
-{
+public class ZipUtils {
 	private static final Logger logger = Logger.getLogger(ZipUtils.class);
 
 	/**
 	 * 压缩指定的文件到同一个压缩包
+	 * 
 	 * @param zipFileName
 	 * @param sourceFiles
 	 * @return
 	 */
-	public static boolean Compress(String zipFileName, String[] sourceFiles)
-	{
-		try
-		{
+	public static boolean Compress(String zipFileName, String[] sourceFiles) {
+		try {
 			// 创建zip输出流
 			ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipFileName));
-			for (String sourceFile : sourceFiles)
-			{
+			for (String sourceFile : sourceFiles) {
 				// 调用函数
 				compress(out, sourceFile);
 			}
 			out.close();
 			return true;
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			logger.error("压缩失败", e);
 			return false;
 		}
 	}
 
-	private static void compress(ZipOutputStream out, String sourceFile) throws IOException
-	{
+	public static boolean Compress(OutputStream os, Map<String, String[]> sourceFiles) {
+		try {
+			// 创建zip输出流
+			ZipOutputStream out = new ZipOutputStream(os);
+			Set<String> paths = sourceFiles.keySet();
+			for (String path : paths) {
+				// 调用函数
+				compress(out, path, sourceFiles.get(path));
+			}
+			out.close();
+			return true;
+		} catch (IOException e) {
+			logger.error("压缩失败", e);
+			return false;
+		}
+	}
+
+	private static void compress(ZipOutputStream out, String path, String[] sourceFiles) throws IOException {
+		InputStream is;
+		int i = 1;
+		for (String file : sourceFiles) {
+			out.putNextEntry(new ZipEntry(path + "/" + i + ".jpg"));
+			is = new URL(file).openStream();
+			int tag;
+			while ((tag = is.read()) != -1) {
+				out.write(tag);
+			}
+			is.close();
+			out.closeEntry();
+			i++;
+		}
+	}
+
+	private static void compress(ZipOutputStream out, String sourceFile) throws IOException {
 		File file = new File(sourceFile);
 		out.putNextEntry(new ZipEntry(file.getName()));
 		FileInputStream fos = new FileInputStream(file);
 		int tag;
-		while ((tag = fos.read()) != -1)
-		{
+		while ((tag = fos.read()) != -1) {
 			out.write(tag);
 		}
 		fos.close();
