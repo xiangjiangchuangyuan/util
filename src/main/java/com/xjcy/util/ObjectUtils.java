@@ -5,12 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 import java.util.zip.GZIPInputStream;
 
 public class ObjectUtils
 {
-
+	private static MessageDigest sha1MD;
+	
 	public static String byte2String(byte[] data, String charset)
 	{
 		try
@@ -98,5 +101,29 @@ public class ObjectUtils
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public static String SHA1(String text)
+	{
+		if (null == sha1MD)
+		{
+			try
+			{
+				sha1MD = MessageDigest.getInstance("SHA-1");
+			}
+			catch (NoSuchAlgorithmException e)
+			{
+				return null;
+			}
+		}
+		try
+		{
+			sha1MD.update(text.getBytes("utf-8"), 0, text.length());
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			sha1MD.update(text.getBytes(), 0, text.length());
+		}
+		return byteToHex(sha1MD.digest());
 	}
 }
