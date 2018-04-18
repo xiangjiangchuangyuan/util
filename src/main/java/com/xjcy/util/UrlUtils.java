@@ -16,6 +16,17 @@ public class UrlUtils
 	static final String NI2_URL = "http://ni2.org/api/create.json?url=%s";
 	static final String MRW_URL = "http://mrw.so/api.php?url=%s";
 	
+	public static String getShortUrl(String url)
+	{
+		String url2 = getShortUrlBySina(url);
+		if(StringUtils.isEmpty(url2))
+		{
+			url2 = getShortUrlByNi2(url);
+			if(StringUtils.isEmpty(url2))
+				url2 = getShortUrlByMrw(url);
+		}
+		return url2;
+	}
 
 	public static String getShortUrlBySina(String url)
 	{

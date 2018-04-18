@@ -14,11 +14,14 @@ public class STR {
 	public static final String HEADER_ACCEPT_ENCODING = "Accept-Encoding";
 	public static final String HEADER_CACHE_CONTROL = "Cache-Control";
 	public static final String HEADER_CONTENT_TYPE = "Content-Type";
+	public static final String HEADER_CONTENT_ENCODING = "Content-Encoding";
 	public static final String HEADER_DATE = "Date";
+	public static final String HEADER_EXPIRES = "Expires";
 	
 	public static final String ENCODING_GZIP = "gzip";
 	public static final String ENCODING_UTF8 = "UTF-8";
 	
+	public static final String CONTENT_TYPE_XML = "text/xml;charset=utf-8";
 	public static final String CONTENT_TYPE_TEXT = "text/plain;charset=utf-8";
 	public static final String CONTENT_TYPE_JSON = "application/json;charset=UTF-8";
 	
@@ -31,7 +34,7 @@ public class STR {
 	public static final String CLASS_LONG = "class java.lang.Long";
 	public static final String CLASS_BOOLEAN = "class java.lang.Boolean";
 	
-	public static final String WEB_CLASS_PATH = "WEB-INF/classes/";
+	public static final String WEB_CLASS_PATH = "/WEB-INF/classes/";
 	
 	public static final String DATE_LONG = "yyyy-MM-dd HH:mm:ss";
 	public static final String DATE_SHORT = "yyyyMMdd";
