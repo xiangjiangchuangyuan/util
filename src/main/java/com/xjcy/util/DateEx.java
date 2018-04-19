@@ -129,4 +129,26 @@ public class DateEx
 		cal.add(Calendar.YEAR, year);
 		return cal.getTime();
 	}
+	
+	static long nd = 1000 * 24 * 60 * 60;// 一天的毫秒数    
+	static long nh = 1000 * 60 * 60;// 一小时的毫秒数    
+	static long nm = 1000 * 60;// 一分钟的毫秒数    
+	static long ns = 1000;// 一秒钟的毫秒数    
+	
+	/**
+	 * 获取时间差
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 */
+	public static String getDiff(String startTime, String endTime) {  
+        long diff = toDate(endTime).getTime() - toDate(startTime).getTime();  
+        long day = diff / nd;// 计算差多少天    
+        long hour = diff % nd / nh + day * 24;// 计算差多少小时    
+        long min = diff % nd % nh / nm + day * 24 * 60;// 计算差多少分钟    
+        long sec = diff % nd % nh % nm / ns;// 计算差多少秒    
+        // 输出结果    
+        return day + "天" + (hour - day * 24) + "小时"  
+                + (min - day * 24 * 60) + "分钟" + sec + "秒";
+    }  
 }

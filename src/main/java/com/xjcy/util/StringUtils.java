@@ -43,4 +43,16 @@ public class StringUtils {
 		}
 		return strList;
 	}
+
+	public static String toString(List<String> strList) {
+		if(strList == null || strList.isEmpty())
+			return null;
+		StringBuffer buffer = new StringBuffer();
+		for (String str : strList) {
+			buffer.append(str);
+			buffer.append(",");
+		}
+		buffer.delete(buffer.length() - 1, buffer.length());
+		return buffer.toString();
+	}
 }

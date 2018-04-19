@@ -9,6 +9,8 @@ public class JSONUtils
 
 	public static String getString(String json, String jsonKey, boolean fromLast)
 	{
+		if(StringUtils.isEmpty(json))
+			return null;
 		int startIndex;
 		if (fromLast) startIndex = json.lastIndexOf(jsonKey);
 		else startIndex = json.indexOf(jsonKey);
@@ -25,6 +27,8 @@ public class JSONUtils
 
 	public static Integer getInteger(String json, String jsonKey, boolean fromLast)
 	{
+		if(StringUtils.isEmpty(json))
+			return null;
 		int startIndex;
 		if (fromLast) startIndex = json.lastIndexOf(jsonKey);
 		else startIndex = json.indexOf(jsonKey);
