@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.zip.ZipEntry;
@@ -40,7 +41,7 @@ public class ZipUtils {
 		}
 	}
 
-	public static boolean Compress(OutputStream os, Map<String, String[]> sourceFiles) {
+	public static boolean Compress(OutputStream os, Map<String, List<String[]>> sourceFiles) {
 		try {
 			// 创建zip输出流
 			ZipOutputStream out = new ZipOutputStream(os);
@@ -57,19 +58,17 @@ public class ZipUtils {
 		}
 	}
 
-	private static void compress(ZipOutputStream out, String path, String[] sourceFiles) throws IOException {
+	private static void compress(ZipOutputStream out, String path, List<String[]> sourceFiles) throws IOException {
 		InputStream is;
-		int i = 1;
-		for (String file : sourceFiles) {
-			out.putNextEntry(new ZipEntry(path + "/" + i + ".jpg"));
-			is = new URL(file).openStream();
+		for (String[] file : sourceFiles) {
+			out.putNextEntry(new ZipEntry(path + "/" + file[0] + ".jpg"));
+			is = new URL(file[1]).openStream();
 			int tag;
 			while ((tag = is.read()) != -1) {
 				out.write(tag);
 			}
 			is.close();
 			out.closeEntry();
-			i++;
 		}
 	}
 
