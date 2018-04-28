@@ -8,6 +8,7 @@ import java.util.Date;
 public class DateEx
 {
 	private static Calendar cal = null;
+	static final SimpleDateFormat shortSdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	static
 	{
@@ -77,6 +78,14 @@ public class DateEx
 		if (day != 0)
 			cal.add(Calendar.DATE, day);
 		return cal.getTime();
+	}
+	
+	public static String addDay(int day)
+	{
+		cal.setTime(new Date());
+		if (day != 0)
+			cal.add(Calendar.DATE, day);
+		return shortSdf.format(cal.getTime());
 	}
 
 	public static String today()
