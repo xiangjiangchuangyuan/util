@@ -12,7 +12,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,22 +23,10 @@ import javax.net.ssl.SSLSocketFactory;
 import org.apache.log4j.Logger;
 
 import com.xjcy.util.ObjectUtils;
+import com.xjcy.util.STR;
 
 public class WebClient {
 	private static final Logger logger = Logger.getLogger(WebClient.class);
-
-	private static final String CHARSET_UTF8 = "utf-8";
-
-	public static final Map<String, String> DEFAULT_HEADERS = new HashMap<String, String>() {
-		/**
-		* 
-		*/
-		private static final long serialVersionUID = 1L;
-		{
-			put("Content-Type", "application/json; charset=UTF-8");
-			put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0");
-		}
-	};
 
 	public static SSLSocketFactory getSSLSocketFactory(String p12, String p12Pass) {
 		try {
@@ -61,7 +48,7 @@ public class WebClient {
 
 	public static String downloadString(String url) {
 		byte[] data = downloadData(url);
-		return ObjectUtils.byte2String(data, CHARSET_UTF8);
+		return ObjectUtils.byte2String(data, STR.ENCODING_UTF8);
 	}
 
 	public static byte[] downloadData(String url) {
@@ -72,7 +59,7 @@ public class WebClient {
 			byte[] temp = new byte[1024];
 			ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
 			int rc = 0;
-			while ((rc = is.read(temp, 0, 100)) > 0) {
+			while ((rc = is.read(temp, 0, 128)) > 0) {
 				swapStream.write(temp, 0, rc);
 			}
 			data = swapStream.toByteArray();
@@ -85,14 +72,8 @@ public class WebClient {
 	}
 
 	public static String uploadString(String url, String postStr) {
-		byte[] data = ObjectUtils.string2Byte(postStr, CHARSET_UTF8);
-		if (data != null) {
-			Map<String, String> headers = new HashMap<>();
-			headers.put("Content-Type", "application/json; charset=UTF-8");
-			headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0");
-			return uploadData(url, data, null, null);
-		}
-		return null;
+		byte[] data = ObjectUtils.string2Byte(postStr, STR.ENCODING_UTF8);
+		return uploadData(url, data, null, null);
 	}
 
 	public static String uploadData(String url, byte[] data, SSLSocketFactory ssl) {

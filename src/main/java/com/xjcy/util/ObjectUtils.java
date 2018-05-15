@@ -5,35 +5,38 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Security;
 import java.util.Formatter;
 import java.util.zip.GZIPInputStream;
 
-public class ObjectUtils
-{
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.log4j.Logger;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+public class ObjectUtils {
+	private static final Logger logger = Logger.getLogger(ObjectUtils.class);
 	private static MessageDigest sha1MD;
-	
-	public static String byte2String(byte[] data, String charset)
-	{
-		try
-		{
+
+	public static String byte2String(byte[] data, String charset) {
+		try {
 			return new String(data, charset);
-		}
-		catch (UnsupportedEncodingException e)
-		{
+		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
 	}
 
-	public static byte[] string2Byte(String str, String charset)
-	{
-		try
-		{
+	public static byte[] string2Byte(String str, String charset) {
+		try {
 			return str.getBytes(charset);
-		}
-		catch (UnsupportedEncodingException e)
-		{
+		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
 	}
@@ -48,11 +51,9 @@ public class ObjectUtils
 	 * @return 说明返回值含义
 	 * @throws 说明发生此异常的条件
 	 */
-	public static String byteToHex(final byte[] hash)
-	{
+	public static String byteToHex(final byte[] hash) {
 		Formatter formatter = new Formatter();
-		for (byte b : hash)
-		{
+		for (byte b : hash) {
 			formatter.format("%02x", b);
 		}
 		String result = formatter.toString();
@@ -60,70 +61,64 @@ public class ObjectUtils
 		return result;
 	}
 
-	public static String input2String(InputStream input)
-	{
+	public static String input2String(InputStream input) {
 		return input2String(input, false);
 	}
 
-	public static String input2String(InputStream input, boolean isGzip)
-	{
+	public static String input2String(InputStream input, boolean isGzip) {
 		StringBuilder sb = new StringBuilder();
 		String line = null;
-		try
-		{
+		try {
 			if (isGzip)
 				input = new GZIPInputStream(input);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input, "utf-8"));
-			while ((line = reader.readLine()) != null)
-			{
+			while ((line = reader.readLine()) != null) {
 				sb.append(line);
 			}
 			reader.close();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		finally
-		{
+		} finally {
 			close(input);
 		}
 		return sb.toString();
 	}
 
-	private static void close(InputStream input)
-	{
-		try
-		{
+	private static void close(InputStream input) {
+		try {
 			input.close();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static String SHA1(String text)
-	{
-		if (null == sha1MD)
-		{
-			try
-			{
+
+	public static String SHA1(String text) {
+		if (null == sha1MD) {
+			try {
 				sha1MD = MessageDigest.getInstance("SHA-1");
-			}
-			catch (NoSuchAlgorithmException e)
-			{
+			} catch (NoSuchAlgorithmException e) {
 				return null;
 			}
 		}
-		try
-		{
+		try {
 			sha1MD.update(text.getBytes("utf-8"), 0, text.length());
-		}
-		catch (UnsupportedEncodingException e)
-		{
+		} catch (UnsupportedEncodingException e) {
 			sha1MD.update(text.getBytes(), 0, text.length());
 		}
 		return byteToHex(sha1MD.digest());
+	}
+
+	public static String decryptData(byte[] data, byte[] key) {
+		try {
+			Security.addProvider(new BouncyCastleProvider());
+			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding");
+			SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+			return new String(cipher.doFinal(data));
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
+				| BadPaddingException e) {
+			logger.error("Decrypt data faild:", e);
+		}
+		return null;
 	}
 }
