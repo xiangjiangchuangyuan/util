@@ -119,11 +119,9 @@ public class ObjectUtils {
 			Security.addProvider(new BouncyCastleProvider());
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding");
 			SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-			IvParameterSpec ivparamSpec = null;
-			if (iv != null) {
-				ivparamSpec = new IvParameterSpec(iv);
-				cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivparamSpec);
-			} else
+			if (iv != null)
+				cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new IvParameterSpec(iv));
+			else
 				cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
 			return new String(cipher.doFinal(data));
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
