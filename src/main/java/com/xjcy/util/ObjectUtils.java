@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +17,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.log4j.Logger;
@@ -109,14 +111,23 @@ public class ObjectUtils {
 	}
 
 	public static String decryptData(byte[] data, byte[] key) {
+		return decryptData(data, null, key);
+	}
+
+	public static String decryptData(byte[] data, byte[] iv, byte[] key) {
 		try {
 			Security.addProvider(new BouncyCastleProvider());
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding");
 			SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+			IvParameterSpec ivparamSpec = null;
+			if (iv != null) {
+				ivparamSpec = new IvParameterSpec(iv);
+				cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivparamSpec);
+			} else
+				cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
 			return new String(cipher.doFinal(data));
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
-				| BadPaddingException e) {
+				| BadPaddingException | InvalidAlgorithmParameterException e) {
 			logger.error("Decrypt data faild:", e);
 		}
 		return null;
