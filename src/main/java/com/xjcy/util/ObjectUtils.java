@@ -1,6 +1,7 @@
 package com.xjcy.util;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,6 +29,8 @@ public class ObjectUtils {
 	private static MessageDigest sha1MD;
 
 	public static String byte2String(byte[] data, String charset) {
+		if(data == null)
+			return null;
 		try {
 			return new String(data, charset);
 		} catch (UnsupportedEncodingException e) {
@@ -36,6 +39,8 @@ public class ObjectUtils {
 	}
 
 	public static byte[] string2Byte(String str, String charset) {
+		if(str == null)
+			return null;
 		try {
 			return str.getBytes(charset);
 		} catch (UnsupportedEncodingException e) {
@@ -84,6 +89,27 @@ public class ObjectUtils {
 			close(input);
 		}
 		return sb.toString();
+	}
+
+	public static byte[] input2Data(InputStream input) throws IOException {
+		if (input == null)
+			return null;
+		byte[] temp = new byte[1024];
+		ByteArrayOutputStream swapStream = null;
+		try {
+			swapStream = new ByteArrayOutputStream();
+			int rc = 0;
+			while ((rc = input.read(temp, 0, temp.length)) > 0) {
+				swapStream.write(temp, 0, rc);
+			}
+			return swapStream.toByteArray();
+		} catch (Exception e) {
+			return null;
+		} finally {
+			input.close();
+			if (swapStream != null)
+				swapStream.close();
+		}
 	}
 
 	private static void close(InputStream input) {

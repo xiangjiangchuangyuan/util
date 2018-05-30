@@ -1,6 +1,5 @@
 package com.xjcy.util.http;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -52,39 +51,36 @@ public class WebClient {
 	}
 
 	public static byte[] downloadData(String url) {
-		byte[] data = null;
 		try {
 			// 将返回的输入流转换成字符串
-			InputStream is = new URL(url).openStream();
-			byte[] temp = new byte[1024];
-			ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-			int rc = 0;
-			while ((rc = is.read(temp, 0, 128)) > 0) {
-				swapStream.write(temp, 0, rc);
-			}
-			data = swapStream.toByteArray();
-			is.close();
-			swapStream.close();
+			return ObjectUtils.input2Data(new URL(url).openStream());
 		} catch (IOException e) {
 			logger.error("调用downloadData失败", e);
 		}
-		return data;
+		return null;
 	}
 
 	public static String uploadString(String url, String postStr) {
 		byte[] data = ObjectUtils.string2Byte(postStr, STR.ENCODING_UTF8);
-		return uploadData(url, data, null, null);
+		byte[] result = uploadData(url, data);
+		return ObjectUtils.byte2String(result, STR.ENCODING_UTF8);
+	}
+
+	public static byte[] uploadData(String url, byte[] data) {
+		return uploadData(url, data, null, null, null);
 	}
 
 	public static String uploadData(String url, byte[] data, SSLSocketFactory ssl) {
-		return uploadData(url, data, null, null, ssl);
+		byte[] result = uploadData(url, data, null, null, ssl);
+		return ObjectUtils.byte2String(result, STR.ENCODING_UTF8);
 	}
 
 	public static String uploadData(String url, byte[] data, Map<String, String> headers, Cookie cookie) {
-		return uploadData(url, data, headers, cookie, null);
+		byte[] result = uploadData(url, data, headers, cookie, null);
+		return ObjectUtils.byte2String(result, STR.ENCODING_UTF8);
 	}
 
-	public static String uploadData(String url, byte[] data, Map<String, String> headers, Cookie cookie,
+	public static byte[] uploadData(String url, byte[] data, Map<String, String> headers, Cookie cookie,
 			SSLSocketFactory ssl) {
 		try {
 			URLConnection conn;
@@ -118,10 +114,9 @@ public class WebClient {
 				os.close();
 			}
 			// 获取请求结果
-			String result = ObjectUtils.input2String(conn.getInputStream());
 			if (cookie != null)
 				cookie.getCookie(conn.getHeaderField("Set-Cookie"));
-			return result;
+			return ObjectUtils.input2Data(conn.getInputStream());
 		} catch (IOException e) {
 			logger.error("调用uploadData失败", e);
 		}
