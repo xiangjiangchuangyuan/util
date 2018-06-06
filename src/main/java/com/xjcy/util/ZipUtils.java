@@ -61,7 +61,7 @@ public class ZipUtils {
 	private static void compress(ZipOutputStream out, String path, List<String[]> sourceFiles) throws IOException {
 		InputStream is;
 		for (String[] file : sourceFiles) {
-			out.putNextEntry(new ZipEntry(path + "/" + file[0] + ".jpg"));
+			out.putNextEntry(new ZipEntry(path + "/" + file[0]));
 			is = new URL(file[1]).openStream();
 			int tag;
 			while ((tag = is.read()) != -1) {

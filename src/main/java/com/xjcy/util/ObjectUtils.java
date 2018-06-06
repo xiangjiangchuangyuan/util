@@ -10,7 +10,6 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
 import java.util.Formatter;
 import java.util.zip.GZIPInputStream;
 
@@ -22,7 +21,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.log4j.Logger;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 public class ObjectUtils {
 	private static final Logger logger = Logger.getLogger(ObjectUtils.class);
@@ -142,7 +140,6 @@ public class ObjectUtils {
 
 	public static String decryptData(byte[] data, byte[] iv, byte[] key) {
 		try {
-			Security.addProvider(new BouncyCastleProvider());
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding");
 			SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
 			if (iv != null)
