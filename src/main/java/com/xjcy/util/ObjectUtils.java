@@ -153,4 +153,23 @@ public class ObjectUtils {
 		}
 		return null;
 	}
+
+	/**
+	 * 合并数组
+	 * @param objs1
+	 * @param objs2
+	 * @return
+	 */
+	public static Object[] mergeArray(Object[] objs1, Object[] objs2) {
+		if(objs1.length == 0 && objs2.length == 0)
+			return new Object[0];
+		if(objs1.length == 0)
+			return objs2;
+		if(objs2.length == 0)
+			return objs1;
+		Object[] temp = new Object[objs1.length + objs2.length];
+		System.arraycopy(objs1, 0, temp, 0, objs1.length);
+		System.arraycopy(objs2, 0, temp, objs1.length, objs2.length);
+		return temp;
+	}
 }
