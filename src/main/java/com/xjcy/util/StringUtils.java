@@ -68,4 +68,15 @@ public class StringUtils {
 		}
 		return sb.toString();
 	}
+
+	public static int find(String str, String findStr) {
+		int n = 0;// 计数器
+		int index = 0;// 指定字符的长度
+		index = str.indexOf(findStr);
+		while (index != -1) {
+			n++;
+			index = str.indexOf(findStr, index + 1);
+		}
+		return n;
+	}
 }
