@@ -24,6 +24,8 @@ public class FileUtils {
 		if (input == null)
 			return false;
 		try {
+			if(!dest.getParentFile().exists())
+				dest.getParentFile().mkdirs();
 			FileOutputStream fos = new FileOutputStream(dest);
 			byte[] buffer = new byte[BYTE_LEN];
 			int n = 0;

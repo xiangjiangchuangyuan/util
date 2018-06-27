@@ -44,7 +44,7 @@ public class StringUtils {
 			else
 				strList.add(str);
 		}
-		return strList;
+		return ObjectUtils.removeDuplicate(strList);
 	}
 
 	public static String toString(List<String> strList) {

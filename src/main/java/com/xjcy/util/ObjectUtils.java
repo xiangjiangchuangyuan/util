@@ -10,7 +10,9 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import javax.crypto.BadPaddingException;
@@ -27,7 +29,7 @@ public class ObjectUtils {
 	private static MessageDigest sha1MD;
 
 	public static String byte2String(byte[] data, String charset) {
-		if(data == null)
+		if (data == null)
 			return null;
 		try {
 			return new String(data, charset);
@@ -37,7 +39,7 @@ public class ObjectUtils {
 	}
 
 	public static byte[] string2Byte(String str, String charset) {
-		if(str == null)
+		if (str == null)
 			return null;
 		try {
 			return str.getBytes(charset);
@@ -156,20 +158,38 @@ public class ObjectUtils {
 
 	/**
 	 * 合并数组
+	 * 
 	 * @param objs1
 	 * @param objs2
 	 * @return
 	 */
 	public static Object[] mergeArray(Object[] objs1, Object[] objs2) {
-		if(objs1.length == 0 && objs2.length == 0)
+		if (objs1.length == 0 && objs2.length == 0)
 			return new Object[0];
-		if(objs1.length == 0)
+		if (objs1.length == 0)
 			return objs2;
-		if(objs2.length == 0)
+		if (objs2.length == 0)
 			return objs1;
 		Object[] temp = new Object[objs1.length + objs2.length];
 		System.arraycopy(objs1, 0, temp, 0, objs1.length);
 		System.arraycopy(objs2, 0, temp, objs1.length, objs2.length);
 		return temp;
+	}
+
+	/**
+	 * 移除list中的相同项
+	 * @param strList
+	 * @return
+	 */
+	public static List<String> removeDuplicate(List<String> strList) {
+		if (strList.isEmpty())
+			return strList;
+		List<String> listTemp = new ArrayList<>();
+		for (int i = 0; i < strList.size(); i++) {
+			if (!listTemp.contains(strList.get(i))) {
+				listTemp.add(strList.get(i));
+			}
+		}
+		return listTemp;
 	}
 }

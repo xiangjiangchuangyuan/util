@@ -85,6 +85,8 @@ public class JSONUtils {
 
 	public static <T> List<T> toList(String str, Class<T> t) {
 		List<T> list = new ArrayList<>();
+		if(StringUtils.isEmpty(str))
+			return list;
 		try {
 			T tt;
 			Field[] fields = t.getDeclaredFields();

@@ -27,6 +27,7 @@ public class STR {
 	
 	public static final String VAL_NULL = "null";
 	public static final String VAL_UNDEFINED = "undefined";
+	public static final String VAL_NAN = "NaN";
 	
 	public static final String CLASS_INTEGER = "class java.lang.Integer";
 	public static final String CLASS_DATE = "class java.util.Date";
