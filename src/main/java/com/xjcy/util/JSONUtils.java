@@ -56,7 +56,8 @@ public class JSONUtils {
 			if (end == -1)
 				end = json.indexOf("]", start);
 		}
-		return Integer.parseInt(json.substring(start, end));
+		json = json.substring(start, end).replace("\"", "").replace("\'", "");
+		return Integer.parseInt(json);
 	}
 
 	public static Long getLong(String json, String jsonKey) {
