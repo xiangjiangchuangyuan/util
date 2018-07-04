@@ -57,6 +57,8 @@ public class JSONUtils {
 				end = json.indexOf("]", start);
 		}
 		json = json.substring(start, end).replace("\"", "").replace("\'", "");
+		if(StringUtils.isEmpty(json))
+			return null;
 		return Integer.parseInt(json);
 	}
 

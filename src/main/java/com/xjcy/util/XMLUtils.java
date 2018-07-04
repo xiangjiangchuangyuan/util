@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -63,29 +62,25 @@ public class XMLUtils
 		return sb.toString();
 	}
 
-	public static Map<String, Object> doXMLParse(String xml)
-	{
+	public static Map<String, Object> doXMLParse(String xml) {
 		if (StringUtils.isEmpty(xml))
 			return null;
 
 		Map<String, Object> m = new HashMap<>();
-		try
-		{
+		DocumentBuilderFactory factory = null;
+		try {
 			InputStream in = new ByteArrayInputStream(xml.getBytes("utf-8"));
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc = builder.parse(in);
+			factory = DocumentBuilderFactory.newInstance();
+			// 禁用外部实体，防止XXE
+			factory.setExpandEntityReferences(false);
+			Document doc = factory.newDocumentBuilder().parse(in);
 			// 关闭流
 			in.close();
-
-			Element root = doc.getDocumentElement();
-			getMapByNode(root, m);
-			factory = null;
-			builder = null;
-		}
-		catch (ParserConfigurationException | SAXException | IOException e)
-		{
+			getMapByNode(doc.getDocumentElement(), m);
+		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
+		} finally {
+			factory = null;
 		}
 		return m;
 	}
