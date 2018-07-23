@@ -57,7 +57,7 @@ public class JSONUtils {
 				end = json.indexOf("]", start);
 		}
 		json = json.substring(start, end).replace("\"", "").replace("\'", "");
-		if(StringUtils.isEmpty(json))
+		if (StringUtils.isEmpty(json) || "null".equals(json))
 			return null;
 		return Integer.parseInt(json);
 	}
@@ -88,7 +88,7 @@ public class JSONUtils {
 
 	public static <T> List<T> toList(String str, Class<T> t) {
 		List<T> list = new ArrayList<>();
-		if(StringUtils.isEmpty(str))
+		if (StringUtils.isEmpty(str))
 			return list;
 		try {
 			T tt;

@@ -139,6 +139,13 @@ public class DateEx
 		return cal.getTime();
 	}
 	
+	public static Date addMonth(Date date, int month)
+	{
+		cal.setTime(date);
+		cal.add(Calendar.MONTH, month);
+		return cal.getTime();
+	}
+	
 	static long nd = 1000 * 24 * 60 * 60;// 一天的毫秒数    
 	static long nh = 1000 * 60 * 60;// 一小时的毫秒数    
 	static long nm = 1000 * 60;// 一分钟的毫秒数    

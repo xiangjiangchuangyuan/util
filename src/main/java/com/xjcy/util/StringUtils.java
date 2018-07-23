@@ -70,6 +70,8 @@ public class StringUtils {
 	}
 
 	public static int find(String str, String findStr) {
+		if(StringUtils.isEmpty(str) || StringUtils.isEmpty(findStr) )
+			return 0;
 		int n = 0;// 计数器
 		int index = 0;// 指定字符的长度
 		index = str.indexOf(findStr);

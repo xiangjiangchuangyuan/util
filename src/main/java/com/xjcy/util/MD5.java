@@ -1,6 +1,7 @@
 package com.xjcy.util;
 
 import java.security.MessageDigest;
+import java.util.Random;
 import java.util.UUID;
 
 public class MD5
@@ -34,5 +35,11 @@ public class MD5
 	public static String getRandomStr()
 	{
 		return UUID.randomUUID().toString().replace("-", "");
+	}
+	
+	static final Random r = new Random();
+	
+	public static synchronized long getRandomId() {
+		return Long.parseLong(System.nanoTime() + "" + r.nextInt(10));
 	}
 }
