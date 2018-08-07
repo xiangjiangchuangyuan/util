@@ -4,9 +4,16 @@ public class STR {
 	public static final String EMPTY = "";
 	public static final String BLANK = " ";
 	public static final String DOT = ".";
+	public static final String COMMA = ",";
+	public static final String MARKS = "\"";
+	public static final String COLON = ":";
 	public static final String SLASH_LEFT = "/";
 	public static final String SLASH_RIGHT = "\\";
 	public static final String HYPHEN = "-";
+	public static final String BRACKET_LEFT = "[";
+	public static final String BRACKET_RIGHT = "]";
+	public static final String BRACE_LEFT = "{";
+	public static final String BRACE_RIGHT = "}";
 
 	public static final String STRUTS_IS_LOAD = "struts_context_is_load";
 	public static final String STRUTS_CONTEXT = "struts_context";
