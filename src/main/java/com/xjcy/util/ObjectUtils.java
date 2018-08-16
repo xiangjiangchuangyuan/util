@@ -49,14 +49,9 @@ public class ObjectUtils {
 	}
 
 	/**
-	 * 方法名：byteToHex</br>
-	 * 详述：字符串加密辅助方法 </br>
-	 * 开发人员：souvc </br>
-	 * 创建时间：2016-1-5 </br>
-	 * 
-	 * @param hash
+	 * 转换二进制数据为字符串
+	 * @param hash 二进制数据
 	 * @return 说明返回值含义
-	 * @throws 说明发生此异常的条件
 	 */
 	public static String byteToHex(final byte[] hash) {
 		Formatter formatter = new Formatter();
@@ -159,9 +154,9 @@ public class ObjectUtils {
 	/**
 	 * 合并数组
 	 * 
-	 * @param objs1
-	 * @param objs2
-	 * @return
+	 * @param objs1 数组1
+	 * @param objs2 数组2
+	 * @return 合并后的数组
 	 */
 	public static Object[] mergeArray(Object[] objs1, Object[] objs2) {
 		if (objs1.length == 0 && objs2.length == 0)
@@ -178,8 +173,8 @@ public class ObjectUtils {
 
 	/**
 	 * 移除list中的相同项
-	 * @param strList
-	 * @return
+	 * @param strList 字符串集合
+	 * @return 去重后的集合
 	 */
 	public static List<String> removeDuplicate(List<String> strList) {
 		if (strList.isEmpty())

@@ -33,8 +33,8 @@ public class StringUtils {
 	/**
 	 * 将逗号分隔字符串转换为List
 	 * 
-	 * @param str
-	 * @return
+	 * @param str 逗号分隔的字符串
+	 * @return 字符串集合
 	 */
 	public static List<String> toList(String str) {
 		List<String> strList = new ArrayList<>();

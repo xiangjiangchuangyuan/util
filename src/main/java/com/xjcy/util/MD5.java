@@ -8,9 +8,8 @@ public class MD5
 {
 	/**
 	 * 对字符串进行MD5编码
-	 * 
-	 * @param originString
-	 * @return
+	 * @param str 字符串
+	 * @return MD5后的字符串
 	 */
 	public static String encodeByMD5(String str)
 	{

@@ -18,8 +18,8 @@ public class DateEx
 	/**
 	 * 转换字符串为date，支持多种格式
 	 * 
-	 * @param str
-	 * @return
+	 * @param str 日期字符串
+	 * @return java.util.Date
 	 */
 	public static Date toDate(String str)
 	{
@@ -153,12 +153,12 @@ public class DateEx
 	
 	/**
 	 * 获取时间差
-	 * @param startTime
-	 * @param endTime
-	 * @return
+	 * @param time1 时间1
+	 * @param time2 时间2
+	 * @return 格式化的时间差
 	 */
-	public static String getDiff(String startTime, String endTime) {  
-        long diff = toDate(endTime).getTime() - toDate(startTime).getTime();  
+	public static String getDiff(String time1, String time2) {  
+        long diff = toDate(time2).getTime() - toDate(time1).getTime();  
         long day = diff / nd;// 计算差多少天    
         long hour = diff % nd / nh + day * 24;// 计算差多少小时    
         long min = diff % nd % nh / nm + day * 24 * 60;// 计算差多少分钟    

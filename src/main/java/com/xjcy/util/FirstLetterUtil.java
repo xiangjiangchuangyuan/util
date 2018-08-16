@@ -23,6 +23,8 @@ public class FirstLetterUtil {
 
 	/**
 	 * 根据一个包含汉字的字符串返回一个汉字拼音首字母的字符串 最重要的一个方法，思路如下：一个个字符读入、判断、输出
+	 * @param sourceStr 源字符串
+	 * @return 首字母字符串
 	 */
 	public static String getFirstLetter(String sourceStr) {
 		String result = "";
@@ -40,7 +42,9 @@ public class FirstLetterUtil {
 	}
 
 	/**
-	 * 输入字符,得到他的声母,英文字母返回对应的大写字母,其他非简体汉字返回 '0'
+	 * 处理字符
+	 * @param ch 处理的char
+	 * @return 对应的大写字母，非简体汉字返回 '0'
 	 */
 	private static char Char2Initial(char ch) {
 		// 对英文字母的处理：小写字母转换为大写，大写的直接返回
@@ -71,7 +75,9 @@ public class FirstLetterUtil {
 	}
 
 	/**
-	 * 取出汉字的编码 cn 汉字
+	 * 取出汉字的编码
+	 * @param ch 汉字
+	 * @return 汉字的编码
 	 */
 	private static int gbValue(char ch) {// 将一个汉字（GB2312）转换为十进制表示。
 		String str = new String();

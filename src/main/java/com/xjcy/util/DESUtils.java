@@ -15,11 +15,11 @@ public class DESUtils
 	private final static String CHARSET = "utf-8";
 
 	/**
-	 * 加密 add zhongsanmu 20160831
-	 * 
-	 * @param data
-	 * @return
-	 * @throws Exception
+	 * DES加密
+	 * @param data 要加密的字符串
+	 * @param key 加密key
+	 * @return 加密后字符串
+	 * @throws Exception 异常
 	 */
 	public static String encrypt(String data, String key) throws Exception
 	{
@@ -30,29 +30,20 @@ public class DESUtils
 	}
 
 	/**
-	 * 解密 add zhongsanmu 20160831
-	 * 
-	 * @param data
-	 * @return
-	 * @throws Exception
+	 * DES解密
+	 * @param data 要解密的字符串
+	 * @param key 解密key
+	 * @return 解密后的字符串
+	 * @throws Exception 异常
 	 */
 	public static String decrypt(String data, String key) throws Exception
 	{
 		if (data == null)
 			return null;
-		byte[] buf = Base64.decodeBase64(data);// update zhongsanmu 20161009
+		byte[] buf = Base64.decodeBase64(data);
 		return new String(decrypt(buf, key.getBytes(CHARSET)), CHARSET);
 	}
 
-	/**
-	 * Description 根据键值进行加密
-	 * 
-	 * @param data
-	 * @param key
-	 *            加密键byte数组
-	 * @return
-	 * @throws Exception
-	 */
 	private static byte[] encrypt(byte[] data, byte[] key) throws Exception
 	{
 		// 生成一个可信任的随机数源
@@ -74,15 +65,6 @@ public class DESUtils
 		return cipher.doFinal(data);
 	}
 
-	/**
-	 * Description 根据键值进行解密
-	 * 
-	 * @param data
-	 * @param key
-	 *            加密键byte数组
-	 * @return
-	 * @throws Exception
-	 */
 	private static byte[] decrypt(byte[] data, byte[] key) throws Exception
 	{
 		// 生成一个可信任的随机数源

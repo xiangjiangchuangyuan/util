@@ -21,9 +21,9 @@ public class ZipUtils {
 	/**
 	 * 压缩指定的文件到同一个压缩包
 	 * 
-	 * @param zipFileName
-	 * @param sourceFiles
-	 * @return
+	 * @param zipFileName 压缩后文件名
+	 * @param sourceFiles 压缩的File路径数组
+	 * @return 压缩结果
 	 */
 	public static boolean Compress(String zipFileName, String[] sourceFiles) {
 		try {
