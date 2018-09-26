@@ -6,10 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
@@ -50,7 +53,9 @@ public class ObjectUtils {
 
 	/**
 	 * 转换二进制数据为字符串
-	 * @param hash 二进制数据
+	 * 
+	 * @param hash
+	 *            二进制数据
 	 * @return 说明返回值含义
 	 */
 	public static String byteToHex(final byte[] hash) {
@@ -132,20 +137,28 @@ public class ObjectUtils {
 	}
 
 	public static String decryptData(byte[] data, byte[] key) {
-		return decryptData(data, null, key);
+		try {
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+			SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+			return new String(cipher.doFinal(data));
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
+				| BadPaddingException e) {
+			logger.error("Decrypt data faild:", e);
+		}
+		return null;
 	}
 
 	public static String decryptData(byte[] data, byte[] iv, byte[] key) {
 		try {
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding");
-			SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-			if (iv != null)
-				cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new IvParameterSpec(iv));
-			else
-				cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+			Key secretKeySpec = new SecretKeySpec(key, "AES");
+			AlgorithmParameters params = AlgorithmParameters.getInstance("AES");
+			params.init(new IvParameterSpec(iv));
+			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, params);
 			return new String(cipher.doFinal(data));
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
-				| BadPaddingException | InvalidAlgorithmParameterException e) {
+				| BadPaddingException | InvalidAlgorithmParameterException | InvalidParameterSpecException e) {
 			logger.error("Decrypt data faild:", e);
 		}
 		return null;
@@ -154,8 +167,10 @@ public class ObjectUtils {
 	/**
 	 * 合并数组
 	 * 
-	 * @param objs1 数组1
-	 * @param objs2 数组2
+	 * @param objs1
+	 *            数组1
+	 * @param objs2
+	 *            数组2
 	 * @return 合并后的数组
 	 */
 	public static Object[] mergeArray(Object[] objs1, Object[] objs2) {
@@ -173,7 +188,9 @@ public class ObjectUtils {
 
 	/**
 	 * 移除list中的相同项
-	 * @param strList 字符串集合
+	 * 
+	 * @param strList
+	 *            字符串集合
 	 * @return 去重后的集合
 	 */
 	public static List<String> removeDuplicate(List<String> strList) {

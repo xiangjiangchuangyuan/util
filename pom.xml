@@ -41,46 +41,4 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	
-	<parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
-
-    <licenses>
-       <license>
-          <name>MIT</name>
-          <url>https://github.com/yydf/util/blob/master/LICENSE</url>
-          <distribution>actable</distribution>
-       </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>yydf</name>
-            <email>441430565@qq.com</email>
-            <organization>xiangjiangchuangyuan</organization>
-            <url>https://github.com/yydf/util</url>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git:git@github.com/yydf/util.git</connection>
-        <developerConnection>scm:git:git@github.com/yydf/util.git</developerConnection>
-        <url>https://github.com/yydf/util</url>
-        <tag>1.0</tag>
-    </scm>
-    <distributionManagement>
-        <snapshotRepository>
-          <id>nexus-snapshots</id>
-          <name>OSS Snapshots Repository</name>
-          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>  
-        </snapshotRepository>
-        <repository>
-          <id>nexus-releases</id>
-          <name>OSS Staging Repository</name>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-      </distributionManagement>
 </project>
