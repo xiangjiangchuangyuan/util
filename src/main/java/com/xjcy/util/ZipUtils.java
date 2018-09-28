@@ -13,10 +13,8 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.log4j.Logger;
-
 public class ZipUtils {
-	private static final Logger logger = Logger.getLogger(ZipUtils.class);
+	private static final LoggerUtils logger = LoggerUtils.from(ZipUtils.class);
 
 	/**
 	 * 压缩指定的文件到同一个压缩包

@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.apache.log4j.Logger;
-
 /**
  * 执行脚本函数
  * @author YYDF
@@ -13,7 +11,7 @@ import org.apache.log4j.Logger;
  */
 public class CmdUtils
 {
-	private static final Logger logger = Logger.getLogger(CmdUtils.class);
+	private static final LoggerUtils logger = LoggerUtils.from(CmdUtils.class);
 	
 	public static void execute(String script)
 	{

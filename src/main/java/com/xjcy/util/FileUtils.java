@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 
-import org.apache.log4j.Logger;
-
 /**
  * 文件存储
  * 
@@ -16,7 +14,7 @@ import org.apache.log4j.Logger;
  *
  */
 public class FileUtils {
-	private static final Logger logger = Logger.getLogger(FileUtils.class);
+	private static final LoggerUtils logger = LoggerUtils.from(FileUtils.class);
 
 	static final int BYTE_LEN = 4096;
 

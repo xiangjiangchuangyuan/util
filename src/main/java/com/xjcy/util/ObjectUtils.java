@@ -25,10 +25,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.log4j.Logger;
-
 public class ObjectUtils {
-	private static final Logger logger = Logger.getLogger(ObjectUtils.class);
+	private static final LoggerUtils logger = LoggerUtils.from(ObjectUtils.class);
 	private static MessageDigest sha1MD;
 
 	public static String byte2String(byte[] data, String charset) {
@@ -173,7 +171,7 @@ public class ObjectUtils {
 	 *            数组2
 	 * @return 合并后的数组
 	 */
-	public static Object[] mergeArray(Object[] objs1, Object[] objs2) {
+	public static Object[] mergeArray(Object[] objs1, Object... objs2) {
 		if (objs1.length == 0 && objs2.length == 0)
 			return new Object[0];
 		if (objs1.length == 0)

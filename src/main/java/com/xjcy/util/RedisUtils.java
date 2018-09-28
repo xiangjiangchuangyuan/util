@@ -4,8 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
-
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -16,7 +14,7 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class RedisUtils
 {
-	private static final Logger logger = Logger.getLogger(RedisUtils.class);
+	private static final LoggerUtils logger = LoggerUtils.from(RedisUtils.class);
 
 	private static JedisPool jedisPool;
 

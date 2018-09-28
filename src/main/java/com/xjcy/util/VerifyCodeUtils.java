@@ -11,10 +11,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import org.apache.log4j.Logger;
-
 public class VerifyCodeUtils {
-	private static final Logger logger = Logger.getLogger(VerifyCodeUtils.class);
+	private static final LoggerUtils logger = LoggerUtils.from(VerifyCodeUtils.class);
 
 	private static final Random d = new Random();
 	private static final String VERIFY_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";

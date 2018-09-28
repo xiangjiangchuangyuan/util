@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 /***
  * 通过jsonKey获取值
  * 
@@ -14,7 +12,7 @@ import org.apache.log4j.Logger;
  */
 public class JSONUtils {
 
-	private static final Logger logger = Logger.getLogger(JSONUtils.class);
+	private static final LoggerUtils logger = LoggerUtils.from(JSONUtils.class);
 
 	public static String getString(String json, String jsonKey) {
 		return getString(json, jsonKey, false);

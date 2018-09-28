@@ -19,13 +19,12 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
-import org.apache.log4j.Logger;
-
+import com.xjcy.util.LoggerUtils;
 import com.xjcy.util.ObjectUtils;
 import com.xjcy.util.STR;
 
 public class WebClient {
-	private static final Logger logger = Logger.getLogger(WebClient.class);
+	private static final LoggerUtils logger = LoggerUtils.from(WebClient.class);
 
 	public static SSLSocketFactory getSSLSocketFactory(String p12, String p12Pass) {
 		try {
